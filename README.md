@@ -12,10 +12,10 @@ This game will help us learn Javascript functions, utilize algorithmic thinking 
 
 
 ## User Stories
-- [ ] As a user, I am given a choice of at least 20 questions.
-- [ ] As a user, I can answer "yes," "no," or "I don't know" every time a question is asked.
-- [ ] As a user, after 20 questions, the game provides a guess. 
-- [ ] As a user, I can input my correct answer if the computer guesses wrong.
+- As a user, I am given a choice of at least 20 questions.
+- As a user, I can answer "yes," "no," or "I don't know" every time a question is asked.
+- As a user, after 20 questions, the game provides a guess. 
+- As a user, I can input my correct answer if the computer guesses wrong.
 
 ## Specifications
 - [ ] Must be written using Javascript functions and elements
@@ -23,9 +23,7 @@ This game will help us learn Javascript functions, utilize algorithmic thinking 
 - [ ] Must be deployed on heroku
 - [ ] Must have a set of questions that narrows down our guess to the final answer
 - [ ] Must be able to guess the user's answer
-
-## Extra Specifications
-- [ ] Must be written in ES2015
+- [ ] Must write tests for Javascript
 
 ### Required
 
