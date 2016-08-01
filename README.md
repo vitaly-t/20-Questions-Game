@@ -8,21 +8,24 @@ The above is an example.
 
 ## Context
 
-This is important because creating this game would allow you to focus mainly on an interactive language and how it interacts with the elements on the page, which change over time. You would learn how the functionality of certain parts of the code depend on each other. 
+This game will help us learn Javascript functions, utilize algorithmic thinking and functional programming. 
+
 
 ## User Stories
 - [ ] As a user, I am given a choice of at least 20 questions.
 - [ ] As a user, I can answer "yes," "no," or "I don't know" every time a question is asked.
-- [ ] As a user, after 20 questions I can tell the computer if it guessed the right answer.
+- [ ] As a user, after 20 questions, the game provides a guess. 
 - [ ] As a user, I can input my correct answer if the computer guesses wrong.
-- 
 
 ## Specifications
+- [ ] Must be written using Javascript functions and elements
+- [ ] Must use database on the backend
+- [ ] Must be deployed on heroku
+- [ ] Must have a set of questions that narrows down our guess to the final answer
+- [ ] Must be able to guess the user's answer
 
-- [ ] As a
-
-### Stretch Goals
-
+## Extra Specifications
+- [ ] Must be written in ES2015
 
 ### Required
 
