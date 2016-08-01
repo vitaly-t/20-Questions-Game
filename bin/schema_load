@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+
+var database = require('../database')
+var db = database.db
+var pgp = database.pgp
+
+
+var questions = require('../questions.json')
+var solutions = require('../solutions.json')
+
+
+db.tx(function() {
+
+  var batch = []
+
+  // drop all tables;
+  batch.push(this.none("DROP TABLE IF EXISTS questions"));
+  batch.push(this.none("DROP TABLE IF EXISTS solutions"));
+  batch.push(this.none("DROP TABLE IF EXISTS solution_answers"));
+  batch.push(this.none("DROP TABLE IF EXISTS games"));
+  batch.push(this.none("DROP TABLE IF EXISTS game_answers"));
+
+  // create all tables;
+  batch.push(this.none("CREATE TABLE questions(id SERIAL PRIMARY KEY, text TEXT)"));
+  batch.push(this.none("CREATE TABLE solutions(id SERIAL PRIMARY KEY, text TEXT)"));
+  batch.push(this.none("CREATE TABLE solution_answers(solution_id INTEGER, question_id INTEGER, yes BOOLEAN"));
+  batch.push(this.none("CREATE TABLE games(id SERIAL PRIMARY KEY, solution_id INTEGER)"));
+  batch.push(this.none("CREATE TABLE game_answers(game_id INTEGER, question_id INTEGER, answered_at DATE, yes BOOLEAN"));
+
+  // insert records into 'questions';
+  questions.forEach(questionText => {
+    batch.push(this.none("insert into questions(text) values($1)", [questionText]));
+  })
+
+  // insert records into 'solutions';
+  Object.keys(solutions).forEach(solutionText => {
+    var solutionAnswers = solutions[solutionText]
+    if (Object.keys(solutionAnswers).length === 0) return;
+    console.log('solution '+solutionText+' insert', Object.keys(solutionAnswers).length)
+    batch.push(
+      this.one("insert into solutions(text) values($1) returning id", [solutionText])
+    );
+  })
+
+
+
+  return batch;
+})
+.then(() => {
+  console.log("schema load successful!");
+  pgp.end();
+}, (reason) => {
+  console.log("schema load FAILED:", reason);
+  pgp.end();
+})
