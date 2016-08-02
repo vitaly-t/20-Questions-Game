@@ -1,6 +1,10 @@
 {
   "name": "twenty-questions-game",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.3.x",
+    "npm": "3.10.x"
+  },
   "description": "Reverse-engineering a 20 questions game.",
   "main": "server.js",
   "scripts": {
