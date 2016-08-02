@@ -179,8 +179,11 @@ a {
 .back-img {
   background-image: url(https://65.media.tumblr.com/115ff20b99d7c4f8779b73e1d1231a37/tumblr_inline_n8brvz3NMg1rhcgox.png);
   height: 150px;
-  background-size: cover;
   color: #fff;
+  background-position: center right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4;
 }
 .full-width {
   margin-bottom: 20px;
