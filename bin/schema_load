@@ -8,27 +8,28 @@ var questions = require('../questions.json')
 var solutions = require('../solutions.json')
 
 
-db.tx(function() {
+db.tx(function(t) {
 
-  var batch = []
+  var queries = [
 
-  // drop all tables;
-  batch.push(this.none("DROP TABLE IF EXISTS questions"));
-  batch.push(this.none("DROP TABLE IF EXISTS solutions"));
-  batch.push(this.none("DROP TABLE IF EXISTS solution_answers"));
-  batch.push(this.none("DROP TABLE IF EXISTS games"));
-  batch.push(this.none("DROP TABLE IF EXISTS game_answers"));
+    // drop all tables;
+    t.none("DROP TABLE IF EXISTS questions"),
+    t.none("DROP TABLE IF EXISTS solutions");
+    t.none("DROP TABLE IF EXISTS solution_answers"),
+    t.none("DROP TABLE IF EXISTS games"),
+    t.none("DROP TABLE IF EXISTS game_answers"),
 
-  // create all tables;
-  batch.push(this.none("CREATE TABLE questions(id SERIAL PRIMARY KEY, text TEXT)"));
-  batch.push(this.none("CREATE TABLE solutions(id SERIAL PRIMARY KEY, text TEXT)"));
-  batch.push(this.none("CREATE TABLE solution_answers(solution_id INTEGER, question_id INTEGER, yes BOOLEAN)"));
-  batch.push(this.none("CREATE TABLE games(id SERIAL PRIMARY KEY, solution_id INTEGER)"));
-  batch.push(this.none("CREATE TABLE game_answers(game_id INTEGER, question_id INTEGER, answered_at DATE, yes BOOLEAN)"));
+    // create all tables;
+    t.none("CREATE TABLE questions(id SERIAL PRIMARY KEY, text TEXT)"),
+    t.none("CREATE TABLE solutions(id SERIAL PRIMARY KEY, text TEXT)"),
+    t.none("CREATE TABLE solution_answers(solution_id INTEGER, question_id INTEGER, yes BOOLEAN)"),
+    t.none("CREATE TABLE games(id SERIAL PRIMARY KEY, solution_id INTEGER)"),
+    t.none("CREATE TABLE game_answers(game_id INTEGER, question_id INTEGER, answered_at DATE, yes BOOLEAN)")
+  ];
 
   // insert records into 'questions';
   questions.forEach(questionText => {
-    batch.push(this.none("insert into questions(text) values($1)", [questionText]));
+    queries.push(t.none("insert into questions(text) values($1)", [questionText]));
   })
 
   // insert records into 'solutions';
@@ -36,12 +37,12 @@ db.tx(function() {
     var solutionAnswers = solutions[solutionText]
     if (Object.keys(solutionAnswers).length === 0) return;
     console.log('solution '+solutionText+' insert', Object.keys(solutionAnswers).length)
-    batch.push(
-      this.one("insert into solutions(text) values($1) returning id", [solutionText])
+    queries.push(
+      t.one("insert into solutions(text) values($1) returning id", [solutionText])
     );
   })
 
-  return batch;
+  return t.batch(queries);
 })
 .then((...args) => {
   console.log("schema load successful!", args);
