@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express')
 var server = express();
 var PUBLIC_DIR = __dirname + '/public';
@@ -28,7 +30,7 @@ server.get('/games/:gameId', (req, res) => {
   // req.pg.one('SELECT * FROM games where id=$1', [req.params.gameId]).then(function(game){
   //   res.render('games/show', {
   //     game: game
-  //   });    
+  //   });
   // })
 
   let game = {
