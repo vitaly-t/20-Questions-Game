@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var database = require('../database')
 var db = database.db
 var pgp = database.pgp

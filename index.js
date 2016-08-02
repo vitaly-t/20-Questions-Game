@@ -9,7 +9,6 @@ server.set('view engine', 'pug');
 
 server.use(express.static(PUBLIC_DIR));
 
-
 server.use(morgan('combined'))
 
 
@@ -26,9 +25,17 @@ server.get('/games/new', (req, res) => {
 });
 
 server.get('/games/:gameId', (req, res) => {
+  // req.pg.one('SELECT * FROM games where id=$1', [req.params.gameId]).then(function(game){
+  //   res.render('games/show', {
+  //     game: game
+  //   });    
+  // })
+
   let game = {
-    id: req.params.gameId
+    id: req.params.gameId,
+    numberOfAnsers: 14,
   }
+
   res.render('games/show', {
     game: game
   });
