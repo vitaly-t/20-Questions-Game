@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+var database = require('../database')
+var db = database.db
+var pgp = database.pgp
+
+
+db.query('select text from questions').then(function(results){
+  console.log(results)
+}).catch(function(error){
+  console.error(error)
+  pgp.end();
+})
