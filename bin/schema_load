@@ -23,9 +23,9 @@ db.tx(function() {
   // create all tables;
   batch.push(this.none("CREATE TABLE questions(id SERIAL PRIMARY KEY, text TEXT)"));
   batch.push(this.none("CREATE TABLE solutions(id SERIAL PRIMARY KEY, text TEXT)"));
-  batch.push(this.none("CREATE TABLE solution_answers(solution_id INTEGER, question_id INTEGER, yes BOOLEAN"));
+  batch.push(this.none("CREATE TABLE solution_answers(solution_id INTEGER, question_id INTEGER, yes BOOLEAN)"));
   batch.push(this.none("CREATE TABLE games(id SERIAL PRIMARY KEY, solution_id INTEGER)"));
-  batch.push(this.none("CREATE TABLE game_answers(game_id INTEGER, question_id INTEGER, answered_at DATE, yes BOOLEAN"));
+  batch.push(this.none("CREATE TABLE game_answers(game_id INTEGER, question_id INTEGER, answered_at DATE, yes BOOLEAN)"));
 
   // insert records into 'questions';
   questions.forEach(questionText => {
@@ -42,12 +42,10 @@ db.tx(function() {
     );
   })
 
-
-
   return batch;
 })
-.then(() => {
-  console.log("schema load successful!");
+.then((...args) => {
+  console.log("schema load successful!", args);
   pgp.end();
 }, (reason) => {
   console.log("schema load FAILED:", reason);
