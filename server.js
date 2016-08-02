@@ -1,10 +1,10 @@
 'use strict';
 
-var express = require('express')
-var server = express();
-var PUBLIC_DIR = __dirname + '/public';
-var UUID = require('node-uuid');
-var morgan = require('morgan');
+const express = require('express')
+const server = express();
+const PUBLIC_DIR = __dirname + '/public';
+const UUID = require('node-uuid');
+const morgan = require('morgan');
 
 server.set('port', process.env.PORT || 3000);
 server.set('view engine', 'pug');
